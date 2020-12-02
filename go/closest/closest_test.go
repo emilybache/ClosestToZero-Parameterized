@@ -5,17 +5,25 @@ import (
 	"testing"
 )
 
-func Test_positive_integers(t *testing.T) {
-	numbers := []int{4, 3, 2, 1}
-	assert.Equal(t, 1, findClosestToZero(numbers))
+type ClosestToZeroTestCase struct {
+	name string
+	numbers []int
+	expected int
 }
 
-func Test_negative(t *testing.T) {
-	numbers := []int{-1, 2, 3}
-	assert.Equal(t, -1, findClosestToZero(numbers))
+var TestCases = []ClosestToZeroTestCase {
+	{name:"Positive Integers", numbers:[]int{4, 3, 2, 1}, expected:1},
+	{name:"Mixed Integers", numbers:[]int{-1, 2, 3}, expected:-1},
+	{name:"Zero", numbers:[]int{0, 1}, expected:0},
+	{name:"Several negative Integers", numbers:[]int{-2, -3, -1}, expected:-1},
+	{name:"Empty list", numbers:[]int{}, expected:0},
 }
 
-func Test_zero(t *testing.T) {
-	numbers := []int{0, 1}
-	assert.Equal(t, 0, findClosestToZero(numbers))
+func TestClosestToZero(t *testing.T) {
+	for _, tc := range TestCases {
+		t.Run(tc.name, func(t *testing.T) {
+			assert.Equal(t, tc.expected, findClosestToZero(tc.numbers))
+		})
+	}
 }
+
